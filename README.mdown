@@ -1,0 +1,5 @@
+Datagrid Bundle for Symfony
+==============================
+
+[![Total Downloads](https://poser.pugx.org/coryjb/datagrid-bundle/downloads.png)](https://packagist.org/packages/coryjb/datagrid-bundle)
+[![Latest Stable Version](https://poser.pugx.org/coryjb/datagrid-bundle/v/stable.png)](https://packagist.org/packages/coryjb/datagrid-bundle)
