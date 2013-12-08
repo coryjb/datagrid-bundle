@@ -1,0 +1,27 @@
+{
+    "name": "coryjb/datagrid-bundle",
+    "description": "This bundle provides a convenient way to show datagrids in Twig",
+    "keywords": ["datagrid"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cory Becker",
+            "email": "cory@bws.io",
+			"homepage": "http://github.com/coryjb/"
+        }
+    ],
+    "require": {
+        "symfony/framework-bundle": "~2.4",
+        "doctrine/common": "~2.2"
+    },
+    "autoload": {
+        "psr-0": { "Becker\\GridBundle": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "minimum-stability": "dev"
+}

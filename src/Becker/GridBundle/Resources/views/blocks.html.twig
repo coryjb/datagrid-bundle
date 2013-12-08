@@ -1,0 +1,53 @@
+{% block grid %}
+<div class="grid">
+	{% if grid.objects %}
+	<table class="table table-striped table-condensed table-hover">
+		<thead>
+			<tr>
+	 			{% for column in grid.columns %}
+	 			<td>
+					{% set _order = grid.orderBy == column.key ? grid.order : 'desc' %}
+					{% set _params = app.request.query.all()|merge({ _order_by: column.key, _order: _order == 'desc' ? 'asc' : 'desc' }) %}
+	 				<a href="{{ path(app.request.attributes.get('_route'), _params) }}">{{ column.name }}</a>
+					{% if grid.orderBy == column.key %}
+						<i class="icon icon-caret-{{ grid.order == 'desc' ? 'down' : 'up' }}" style="margin-left: 3px"></i>
+					{% endif %}
+	 			</td>
+	 			{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for object in grid.objects %}
+			<tr>
+				{% for column in grid.columns %}
+					{% if column.options.template is defined %}
+					<td>{% include column.options.template with { 'object': object } %}</td>
+					{% elseif column.options.route is defined %}
+					<td><a href="{{ path(column.options.route, { id: object.id} ) }}">{{ attribute(object, column.key) }}</a></td>
+					{% elseif attribute(object, column.key) is iterable %}
+					<td>{{ attribute(object, column.key)|join(', ') }}</td>
+					{% else %}
+					<td>{{ attribute(object, column.key) }}</td>
+					{% endif %}
+				{% endfor %}
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	
+	<ul class="pagination">
+		{% set _params = app.request.query.all()|merge({ _page: grid.page > 1 ? grid.page - 1 : 1 }) %}
+		<li class="{{ grid.page == 1 ? 'disabled' }}"><a href="{{ path(app.request.attributes.get('_route'), _params) }}">&laquo;</a></li>
+		{% for page in range(1, grid.pages) %}
+			{% set _params = app.request.query.all()|merge({ _page: page }) %}
+			<li class="{{ grid.page == page ? 'active' }}"><a href="{{ path(app.request.attributes.get('_route'), _params) }}">{{ page }}</a></li>
+		{% endfor %}
+		{% set _params = app.request.query.all()|merge({ _page: grid.page < grid.pages ? grid.page + 1 : grid.pages }) %}
+		<li class="{{ grid.page == grid.pages ? 'disabled' }}"><a href="{{ path(app.request.attributes.get('_route'), _params) }}">&raquo;</a></li>
+	</ul>
+	
+	{% else %}
+	<p class="alert">No information is available</p>
+	{% endif %}
+</div>
+{% endblock %}

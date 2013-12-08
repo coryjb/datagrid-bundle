@@ -1,0 +1,16 @@
+services:
+    grid:
+        class: Becker\GridBundle\Grid\Grid
+        calls:
+            - [setContainer, [@service_container]]
+            
+    grid.twig_extension:
+        class: Becker\GridBundle\Twig\DataGridExtension
+        arguments: [@twig]
+        tags:
+            - { name: twig.extension }
+            
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
